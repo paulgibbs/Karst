@@ -1,16 +1,16 @@
-Karst
-====
-Contributors: [DJPaul](http://profiles.wordpress.org/DJPaul)
-License: [GPLv3](http://www.gnu.org/licenses/gpl-3.0.html)
+<?php
+/*
+Plugin Name: Karst plugin
+Plugin URI: http://byotos.com
+Description: Provides features for the Karst theme. Karst allows you to easily create and display beautiful documentation for an API.
+Version: 1.0
+Author: Paul Gibbs
+Author URI: http://byotos.com
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Network: false
+Text Domain: dpk
 
-Karst allows you to easily create and display beautiful documentation for an API. Consists of a theme and a plugin.
-
-Installation
-----
-1. @todo Installation instructions
-
-License
-----
 "Karst"
 Copyright (C) 2012 Paul Gibbs
 
@@ -25,3 +25,8 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/.
+*/
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+?>
