@@ -73,20 +73,17 @@ function dpk_register_post_types_and_taxonomies() {
 		'description'          => __( 'A resource is an individual method in an API that can be used by other programs.', 'dpk' ),
 		'exclude_from_search'  => false,
 		'has_archive'          => false,
-		'hierarchical'         => false,
+		'hierarchical'         => true,
 		'labels'               => $labels,
 		'public'               => true,
 		'publicly_queryable'   => true,
 		'query_var'            => true,
 		'register_meta_box_cb' => 'dpk_resource_mb_callback',
-		'rewrite'              => array(
-		                            'pages' => false,
-		                            'slug'  => 'resource',
-		                          ),
+		'rewrite'              => array( 'slug'  => 'resource' ),
 		'show_in_menu'         => true,
 		'show_in_nav_menus'    => true,
 		'show_ui'              => true,
-		'supports'             => array( 'title', 'editor', 'excerpt', 'revisions' ),
+		'supports'             => array( 'title', 'editor', 'excerpt', 'page-attributes', 'revisions', ),
 		'taxonomies'           => array(),
 	);
 	register_post_type( 'dpk_resource', $args );
