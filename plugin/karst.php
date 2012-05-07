@@ -30,8 +30,17 @@ along with this program.  If not, see http://www.gnu.org/licenses/.
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Update the permalink structure
-register_activation_hook(   __FILE__, 'flush_rewrite_rules' );
+/**
+ * On activation, set an option so we know to flush the rewrite rules later.
+ *
+ * @since 1.0
+ */
+function dpk_activation() {
+	add_option( 'dpk_flush_rewrite_rules', true );
+}
+register_activation_hook( __FILE__, 'dpk_activation' );
+
+// Clear rewrite rules on plugin deactivation. @todo Check if this works?
 register_deactivation_hook( __FILE__, 'flush_rewrite_rules' );
 
 /**
@@ -144,6 +153,12 @@ function dpk_register_post_types_and_taxonomies() {
 		'update_count_callback' => '_update_post_term_count',
 	);
 	register_taxonomy( 'dpk_tags', array( 'dpk_resource' ), $args );
+
+	// If plugin has just been activated, flush rewrite rules
+	if ( get_option( 'dpk_flush_rewrite_rules' ) ) {
+		flush_rewrite_rules();
+		delete_option( 'dpk_flush_rewrite_rules' );
+	}
 }
 add_action( 'init', 'dpk_register_post_types_and_taxonomies' );
 
