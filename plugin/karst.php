@@ -79,7 +79,10 @@ function dpk_register_post_types_and_taxonomies() {
 		'publicly_queryable'   => true,
 		'query_var'            => true,
 		'register_meta_box_cb' => 'dpk_resource_mb_callback',
-		'rewrite'              => array( 'slug' => 'resource' ),
+		'rewrite'              => array(
+		                            'pages' => false,
+		                            'slug'  => 'resource',
+		                          ),
 		'show_in_menu'         => true,
 		'show_in_nav_menus'    => true,
 		'show_ui'              => true,
