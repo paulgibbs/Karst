@@ -44,33 +44,31 @@ register_activation_hook( __FILE__, 'dpk_activation' );
 register_deactivation_hook( __FILE__, 'flush_rewrite_rules' );
 
 /**
- * Register the 'Resource' post type and taxonomies.
- *
- * A resource is an exposed method in an API that should be used by other programs.
+ * Register the 'Entity' post type and taxonomies.
  *
  * @since 1.0
  */
 function dpk_register_post_types_and_taxonomies() {
 	// Post type - Resource
 	$labels = array(
-		'add_new'            => _x( 'Add New', 'resource', 'dpk' ),
-		'add_new_item'       => _x( 'Add New Resource', 'resource', 'dpk' ),
-		'edit_item'          => _x( 'Edit Resource', 'resource', 'dpk' ),
-		'menu_name'          => _x( 'Resources', 'resource', 'dpk' ),
-		'name'               => _x( 'Resources', 'resource', 'dpk' ),
-		'new_item'           => _x( 'New Resource', 'resource', 'dpk' ),
-		'not_found'          => _x( 'No resources found', 'resource', 'dpk' ),
-		'not_found_in_trash' => _x( 'No resources found in Trash', 'resource', 'dpk' ),
-		'parent_item_colon'  => _x( 'Parent Resource:', 'resource', 'dpk' ),
-		'search_items'       => _x( 'Search Resources', 'resource', 'dpk' ),
-		'singular_name'      => _x( 'Resource', 'resource', 'dpk' ),
-		'view_item'          => _x( 'View Resource', 'resource', 'dpk' ),
+		'add_new'            => _x( 'Add New', 'entity', 'dpk' ),
+		'add_new_item'       => _x( 'Add New Entity', 'entity', 'dpk' ),
+		'edit_item'          => _x( 'Edit Entity', 'entity', 'dpk' ),
+		'menu_name'          => _x( 'Entities', 'entity', 'dpk' ),
+		'name'               => _x( 'Entities', 'entity', 'dpk' ),
+		'new_item'           => _x( 'New Entity', 'entity', 'dpk' ),
+		'not_found'          => _x( 'No entities found', 'entity', 'dpk' ),
+		'not_found_in_trash' => _x( 'No entities found in Trash', 'entity', 'dpk' ),
+		'parent_item_colon'  => _x( 'Parent Entity:', 'entity', 'dpk' ),
+		'search_items'       => _x( 'Search Entities', 'entity', 'dpk' ),
+		'singular_name'      => _x( 'Entity', 'entity', 'dpk' ),
+		'view_item'          => _x( 'View Entity', 'entity', 'dpk' ),
 	);
 
 	$args = array(
 		'can_export'           => true,
 		'capability_type'      => 'post',
-		'description'          => __( 'A resource is an individual method in an API that can be used by other programs.', 'dpk' ),
+		'description'          => __( 'An Entity represents part of your API. This is usually a class, function, method, or resource.', 'dpk' ),
 		'exclude_from_search'  => false,
 		'has_archive'          => false,
 		'hierarchical'         => true,
@@ -79,7 +77,7 @@ function dpk_register_post_types_and_taxonomies() {
 		'publicly_queryable'   => true,
 		'query_var'            => true,
 		'register_meta_box_cb' => 'dpk_resource_mb_callback',
-		'rewrite'              => array( 'slug'  => 'resource' ),
+		'rewrite'              => array( 'slug'  => 'entity' ),
 		'show_in_menu'         => true,
 		'show_in_nav_menus'    => true,
 		'show_ui'              => true,
@@ -119,7 +117,7 @@ function dpk_register_post_types_and_taxonomies() {
 		'show_ui'               => true,
 		'update_count_callback' => '_update_post_term_count',
 	);
-	register_taxonomy( 'dpk_categories', array( 'dpk_resource' ), $args );
+	register_taxonomy( 'dpk_category', array( 'dpk_resource' ), $args );
 
 
 	// Taxonomy - Tags
@@ -152,7 +150,7 @@ function dpk_register_post_types_and_taxonomies() {
 		'show_ui'               => true,
 		'update_count_callback' => '_update_post_term_count',
 	);
-	register_taxonomy( 'dpk_tags', array( 'dpk_resource' ), $args );
+	register_taxonomy( 'dpk_tag', array( 'dpk_resource' ), $args );
 
 	// If plugin has just been activated, flush rewrite rules
 	if ( get_option( 'dpk_flush_rewrite_rules' ) ) {
@@ -168,7 +166,7 @@ add_action( 'init', 'dpk_register_post_types_and_taxonomies' );
  * @since 1.0
  */
 function dpk_resource_mb_callback() {
-	add_meta_box( 'dpk-resource-info-mb', __( 'Resource Information', 'dpk' ), 'dpk_resource_mb_info', 'dpk_resource', 'side', 'high' );
+//	add_meta_box( 'dpk-resource-info-mb', __( 'Resource Information', 'dpk' ), 'dpk_resource_mb_info', 'dpk_resource', 'side', 'high' );
 }
 
 /**
