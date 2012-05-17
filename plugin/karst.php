@@ -77,7 +77,10 @@ function dpk_register_post_types_and_taxonomies() {
 		'publicly_queryable'   => true,
 		'query_var'            => true,
 		'register_meta_box_cb' => 'dpk_resource_mb_callback',
-		'rewrite'              => array( 'slug'  => 'entity' ),
+		'rewrite'              => array(
+			'slug'       => 'entity',
+			'with_front' => false,
+			),
 		'show_in_menu'         => true,
 		'show_in_nav_menus'    => true,
 		'show_ui'              => true,
@@ -150,7 +153,7 @@ function dpk_register_post_types_and_taxonomies() {
 		'show_ui'               => true,
 		'update_count_callback' => '_update_post_term_count',
 	);
-	register_taxonomy( 'dpk_tag', array( 'dpk_resource' ), $args );
+	register_taxonomy( 'dpk_tag', array( 'dpk_entity' ), $args );
 
 	// If plugin has just been activated, flush rewrite rules
 	if ( get_option( 'dpk_flush_rewrite_rules' ) ) {
@@ -159,6 +162,42 @@ function dpk_register_post_types_and_taxonomies() {
 	}
 }
 add_action( 'init', 'dpk_register_post_types_and_taxonomies' );
+
+/**
+ * Add the Karst-specific rewrite tags
+ *
+ * @since 1.0
+ */
+/*function dpk_add_rewrite_tags() {
+	// Pad attributes
+	$pad      = 2;
+	$wrapper  = '%';
+
+	$entity_category = str_pad( 'dpk_category', strlen( 'dpk_category' ) + $pad, 'dpk_category', STR_PAD_BOTH );
+
+	add_rewrite_tag( $bbp_view, '([^/]+)'   );
+	add_rewrite_tag( $bbp_edit, '([1]{1,})' );
+}
+add_action( 'init', 'dpk_add_rewrite_tags' );*/
+
+/**
+ * Generate Karst-specific rewrite rules
+ *
+ * @param WP_Rewrite $wp_rewrite
+ * @return WP_Rewrite Updated rewrite rules
+ * @since 1.0
+ */
+
+function dpk_generate_rewrite_rules( $wp_rewrite ) {
+	$karst_rules = array(
+		'entity/([^/]+)/([^/]+)/?$' => 'index.php?dpk_category=' . $wp_rewrite->preg_index( 1 ) . '&dpk_resource=' . $wp_rewrite->preg_index( 2 ),
+	);
+
+	// Merge Karst rules with existing
+	$wp_rewrite->rules = array_merge( $karst_rules, $wp_rewrite->rules );
+	return $karst_rules;
+}
+add_action( 'generate_rewrite_rules', 'dpk_generate_rewrite_rules' );
 
 /**
  * Called when setting up the meta boxes for the Resource post type
@@ -237,7 +276,7 @@ function dpk_resource_mb_save( $post_id, $post ) {
 
 	// Handle response_obj here...
 }
-add_action( 'publish_dpk_resource', 'dpk_resource_mb_save', 10, 2 );
+//add_action( 'publish_dpk_resource', 'dpk_resource_mb_save', 10, 2 );
 
 /**
  * Inline CSS for the Resource post type screen.
