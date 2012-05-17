@@ -1,1 +1,3 @@
-yo
+<?php 
+echo __FILE__;
+?>
